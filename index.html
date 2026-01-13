@@ -6,28 +6,32 @@
 </head>
 <body>
     <script>
-        // 1. 주소창에서 정보 읽기 (c=기업명, u=유튜브주소, s=구독ID)
+        // 1. 주소창에서 짧은 데이터 읽기
         const params = new URLSearchParams(window.location.search);
-        const c = params.get('c') || ''; 
-        const u = params.get('u') || ''; 
-        const s = params.get('s') || ''; 
+        const c = params.get('c') || ''; // 기업명
+        const e = params.get('e') || ''; // 이메일
+        const y = params.get('y') || ''; // 유튜브 고정 문구
+        const u = params.get('u') || ''; // 유튜브 주소
+        const s = params.get('s') || ''; // 구독 관리 ID
 
         // 2. 에어테이블 원본 폼 주소
         const baseUrl = "https://airtable.com/appzPMEgLj1HAFx0U/pag3iTsj3fHFmRszB/form";
 
-        // 3. 필드명 매칭 (특수문자가 많으므로 여기서 정확히 처리합니다)
+        // 3. 에어테이블의 긴 필드명과 1:1 매칭 (정확한 필드명 입력)
         const query = [
             `prefill_${encodeURIComponent("*필수* 기업명")}=${encodeURIComponent(c)}`,
+            `prefill_${encodeURIComponent("*필수* 링크받을 메일 주소")}=${encodeURIComponent(e)}`,
+            `prefill_${encodeURIComponent("(유튜브용) 고정 문구 & 연락처 (최하단에 작성됩니다)")}=${encodeURIComponent(y)}`,
             `prefill_${encodeURIComponent("유튜브 주소")}=${encodeURIComponent(u)}`,
             `prefill_${encodeURIComponent("구독 관리")}=${encodeURIComponent(s)}`,
             `hide_${encodeURIComponent("구독 관리")}=true`
         ].join('&');
 
-        // 4. 합쳐서 이동하기
+        // 4. 최종 에어테이블 주소로 이동
         window.location.href = `${baseUrl}?${query}`;
     </script>
     <p style="text-align:center; padding-top:100px; font-family:sans-serif; color:#666;">
-        신청 양식으로 안전하게 이동 중입니다...
+        신청 양식으로 이동 중입니다. 잠시만 기다려 주세요...
     </p>
 </body>
 </html>
