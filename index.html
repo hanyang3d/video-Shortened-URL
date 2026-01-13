@@ -6,32 +6,37 @@
 </head>
 <body>
     <script>
-        // 1. 주소창에서 짧은 데이터 읽기
         const params = new URLSearchParams(window.location.search);
-        const c = params.get('c') || ''; // 기업명
-        const e = params.get('e') || ''; // 이메일
-        const y = params.get('y') || ''; // 유튜브 고정 문구
-        const u = params.get('u') || ''; // 유튜브 주소
-        const s = params.get('s') || ''; // 구독 관리 ID
+        
+        // 1. 데이터 가져오기
+        const c = params.get('c') || '';
+        const e = params.get('e') || '';
+        const y = params.get('y') || '';
+        let u = params.get('u') || '';
+        const s = params.get('s') || '';
 
-        // 2. 에어테이블 원본 폼 주소
+        // 2. [개선] 유튜브 핸들(@)만 왔을 경우 전체 주소로 복원
+        if (u && u.startsWith('@')) {
+            u = `https://www.youtube.com/${u}`;
+        }
+
         const baseUrl = "https://airtable.com/appzPMEgLj1HAFx0U/pag3iTsj3fHFmRszB/form";
 
-        // 3. 에어테이블의 긴 필드명과 1:1 매칭 (정확한 필드명 입력)
-        const query = [
-            `prefill_${encodeURIComponent("*필수* 기업명")}=${encodeURIComponent(c)}`,
-            `prefill_${encodeURIComponent("*필수* 링크받을 메일 주소")}=${encodeURIComponent(e)}`,
-            `prefill_${encodeURIComponent("(유튜브용) 고정 문구 & 연락처 (최하단에 작성됩니다)")}=${encodeURIComponent(y)}`,
-            `prefill_${encodeURIComponent("유튜브 주소")}=${encodeURIComponent(u)}`,
-            `prefill_${encodeURIComponent("구독 관리")}=${encodeURIComponent(s)}`,
-            `hide_${encodeURIComponent("구독 관리")}=true`
-        ].join('&');
+        // 3. 값이 있는 항목만 prefill 쿼리에 추가
+        let prefillParts = [];
+        if (c) prefillParts.push(`prefill_${encodeURIComponent("*필수* 기업명")}=${encodeURIComponent(c)}`);
+        if (e) prefillParts.push(`prefill_${encodeURIComponent("*필수* 링크받을 메일 주소")}=${encodeURIComponent(e)}`);
+        if (y) prefillParts.push(`prefill_${encodeURIComponent("(유튜브용) 고정 문구 & 연락처 (최하단에 작성됩니다)")}=${encodeURIComponent(y)}`);
+        if (u) prefillParts.push(`prefill_${encodeURIComponent("유튜브 주소")}=${encodeURIComponent(u)}`);
+        if (s) {
+            prefillParts.push(`prefill_${encodeURIComponent("구독 관리")}=${encodeURIComponent(s)}`);
+            prefillParts.push(`hide_${encodeURIComponent("구독 관리")}=true`);
+        }
 
-        // 4. 최종 에어테이블 주소로 이동
-        window.location.href = `${baseUrl}?${query}`;
+        window.location.href = `${baseUrl}?${prefillParts.join('&')}`;
     </script>
     <p style="text-align:center; padding-top:100px; font-family:sans-serif; color:#666;">
-        신청 양식으로 이동 중입니다. 잠시만 기다려 주세요...
+        신청 양식으로 이동 중입니다...
     </p>
 </body>
 </html>
