@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>페이지 이동 중...</title>
+</head>
+<body>
+    <script>
+        // 1. 주소창에서 정보 읽기 (c=기업명, u=유튜브주소, s=구독ID)
+        const params = new URLSearchParams(window.location.search);
+        const c = params.get('c') || ''; 
+        const u = params.get('u') || ''; 
+        const s = params.get('s') || ''; 
+
+        // 2. 에어테이블 원본 폼 주소
+        const baseUrl = "https://airtable.com/appzPMEgLj1HAFx0U/pag3iTsj3fHFmRszB/form";
+
+        // 3. 필드명 매칭 (특수문자가 많으므로 여기서 정확히 처리합니다)
+        const query = [
+            `prefill_${encodeURIComponent("*필수* 기업명")}=${encodeURIComponent(c)}`,
+            `prefill_${encodeURIComponent("유튜브 주소")}=${encodeURIComponent(u)}`,
+            `prefill_${encodeURIComponent("구독 관리")}=${encodeURIComponent(s)}`,
+            `hide_${encodeURIComponent("구독 관리")}=true`
+        ].join('&');
+
+        // 4. 합쳐서 이동하기
+        window.location.href = `${baseUrl}?${query}`;
+    </script>
+    <p style="text-align:center; padding-top:100px; font-family:sans-serif; color:#666;">
+        신청 양식으로 안전하게 이동 중입니다...
+    </p>
+</body>
+</html>
