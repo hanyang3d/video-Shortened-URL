@@ -14,6 +14,7 @@
         const y = params.get('y') || '';
         let u = params.get('u') || '';
         const s = params.get('s') || '';
+        const p = params.get('p') || '';
 
         // 2. [개선] 유튜브 핸들(@)만 왔을 경우 전체 주소로 복원
         if (u && u.startsWith('@')) {
@@ -31,6 +32,10 @@
         if (s) {
             prefillParts.push(`prefill_${encodeURIComponent("구독 관리")}=${encodeURIComponent(s)}`);
             prefillParts.push(`hide_${encodeURIComponent("구독 관리")}=true`);
+        }
+        if (p) {
+            prefillParts.push(`prefill_${encodeURIComponent("전화번호")}=${encodeURIComponent(s)}`);
+            prefillParts.push(`hide_${encodeURIComponent("전화번호")}=true`);
         }
 
         window.location.href = `${baseUrl}?${prefillParts.join('&')}`;
