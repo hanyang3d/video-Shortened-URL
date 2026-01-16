@@ -33,10 +33,7 @@
             prefillParts.push(`prefill_${encodeURIComponent("구독 관리")}=${encodeURIComponent(s)}`);
             prefillParts.push(`hide_${encodeURIComponent("구독 관리")}=true`);
         }
-        if (p) {
-            prefillParts.push(`prefill_${encodeURIComponent("전화번호")}=${encodeURIComponent(s)}`);
-            prefillParts.push(`hide_${encodeURIComponent("전화번호")}=true`);
-        }
+        if (p) prefillParts.push(`prefill_${encodeURIComponent("연락처(전화번호)")}=${encodeURIComponent(c)}`);
 
         window.location.href = `${baseUrl}?${prefillParts.join('&')}`;
     </script>
